@@ -2,6 +2,7 @@
 // import ReactDOM from 'react-dom';
 // import './index.css';
 // import App from './App';
+import { combineReducers, createStore } from 'redux';
 import deepFreeze from 'deepfreeze';
 import expect from 'expect';
 
@@ -36,6 +37,44 @@ const reducerTodoList = (state = [], action) => {
             return state;
     }
 };
+
+const store = createStore(reducerTodoList);
+console.log('Initial state');
+console.log(store.getState());
+console.log('----------------');
+
+console.log('Dispatching ADD_TO_DO');
+store.dispatch({
+    type: 'ADD_TO_DO',
+    id: 0,
+    text: 'First Todo Learning Redux'
+});
+
+console.log('Current State');
+console.log(store.getState());
+console.log('-------------------');
+
+
+console.log('Dispatching ADD_TO_DO');
+store.dispatch({
+    type: 'ADD_TO_DO',
+    id: 1,
+    text: 'Second Todo Learning Redux'
+});
+
+console.log('Current State');
+console.log(store.getState());
+console.log('-------------------');
+
+console.log('Dispatching TOGGLE_TO_DO');
+store.dispatch({
+    type: 'TOGGLE_TO_DO',
+    id: 0
+});
+
+console.log('Current State');
+console.log(store.getState());
+console.log('-------------------');
 
 const testToggleTodo = () => {
     const todoBefore = [{
