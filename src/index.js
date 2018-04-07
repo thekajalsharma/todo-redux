@@ -24,8 +24,8 @@ const reducerTodo = (todo, action) => {
     }
 };
 
-const reducerTodoList = (state = [], action) => {
-    console.log("In reducerTodoList");
+const reducerTodoArray = (state = [], action) => {
+    console.log("In reducerTodoArray");
     switch (action.type) {
         case 'ADD_TO_DO':
             return [...state, reducerTodo(undefined, action)];
@@ -38,7 +38,24 @@ const reducerTodoList = (state = [], action) => {
     }
 };
 
-const store = createStore(reducerTodoList);
+const reducerVisibilityFilter = (state = 'SHOW_ALL', action) => {
+    switch (action.type) {
+        case 'SET_VISIBILITY_FILTER':
+            return action.filter;
+        default:
+            return state;
+    }
+};
+
+const reducerTodoApp = (state = {}, action) => {
+    return {
+        todoArray: reducerTodoArray(state.todoArray, action),
+        visibilityFilter: reducerVisibilityFilter(state.visibilityFilter, action)
+    };
+};
+
+
+const store = createStore(reducerTodoApp);
 console.log('Initial state');
 console.log(store.getState());
 console.log('----------------');
@@ -76,6 +93,25 @@ console.log('Current State');
 console.log(store.getState());
 console.log('-------------------');
 
+console.log('Dispatching TOGGLE_TO_DO');
+store.dispatch({
+    type: 'TOGGLE_TO_DO',
+    id: 0
+});
+
+console.log('Current State');
+console.log(store.getState());
+console.log('-------------------');
+
+console.log('Dispatching SET_VISIBILITY FILTER');
+store.dispatch({
+    type: 'SET_VISIBILITY_FILTER',
+    filter: 'SHOW_COMPLETED'
+});
+
+console.log('Current State');
+console.log(store.getState());
+
 const testToggleTodo = () => {
     const todoBefore = [{
         id: 0,
@@ -95,7 +131,7 @@ const testToggleTodo = () => {
     deepFreeze(todoBefore);
     console.log("Calling Toggle");
     expect(
-        reducerTodoList(todoBefore, action)
+        reducerTodoArray(todoBefore, action)
     ).toEqual(todoAfter);
 };
 
@@ -114,7 +150,7 @@ const testAddTODO = () => {
     console.log("Calling Add");
 
     expect(
-        reducerTodoList(stateBefore, action)
+        reducerTodoArray(stateBefore, action)
     ).toEqual(stateAfter);
 };
 
