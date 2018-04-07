@@ -1,7 +1,7 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import './index.css';
-// import App from './App';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import TodoApp from './TodoApp';
 import { combineReducers, createStore } from 'redux';
 import deepFreeze from 'deepfreeze';
 import expect from 'expect';
@@ -47,12 +47,17 @@ const reducerVisibilityFilter = (state = 'SHOW_ALL', action) => {
     }
 };
 
-const reducerTodoApp = (state = {}, action) => {
-    return {
-        todoArray: reducerTodoArray(state.todoArray, action),
-        visibilityFilter: reducerVisibilityFilter(state.visibilityFilter, action)
-    };
-};
+// const reducerTodoApp = (state = {}, action) => {
+//     return {
+//         todoArray: reducerTodoArray(state.todoArray, action),
+//         visibilityFilter: reducerVisibilityFilter(state.visibilityFilter, action)
+//     };
+// };
+
+const reducerTodoApp = combineReducers({
+    todoArray: reducerTodoArray,
+    visibilityFilter: reducerVisibilityFilter
+})
 
 
 const store = createStore(reducerTodoApp);
@@ -157,4 +162,4 @@ const testAddTODO = () => {
 testAddTODO();
 testToggleTodo();
 console.log('All tests passed');
-//ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<TodoApp store={store} />, document.getElementById('root'));
