@@ -15,16 +15,24 @@ class VisibleTodoList extends React.Component {
     }
 
     getVisibleTodoArray = (todoArray, visibilityFilter) => {
+        //  return todoArray;
+        console.log("**************");
+        const { store } = this.props;
         switch (visibilityFilter) {
-            case 'SHOW_COMPLETED':
-                const visibleArray = todoArray.map((todo) => {
-                    if (todo.completed)
-                        return todo;
-                });
-            case 'ACTIVE':
-            case 'ALL':
-            default:
+            case 'SHOW_ALL':
+                console.log("In Show all ");
+                console.log(store.getState());
                 return todoArray;
+            case 'SHOW_COMPLETED':
+                console.log("In Show completed ");
+                console.log(store.getState());
+                const visibleArray = todoArray.filter((todo) => todo.completed);
+                console.log("Visible Array");
+                console.log(visibleArray);
+                return visibleArray;
+            case 'SHOW_ACTIVE':
+                console.log("In Show active");
+                return todoArray.filter((todo) => !todo.completed);
         }
         // const visibleTodoArray = [{ id: 0, text: "One", completed: false }];
         // return visibleTodoArray;

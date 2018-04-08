@@ -1,7 +1,7 @@
 import React from 'react';
 import AddTodo from './AddTodo';
 import VisibleTodoList from './VisibleTodoList';
-
+import Footer from './Footer';
 
 class TodoApp extends React.Component {
     render() {
@@ -11,6 +11,7 @@ class TodoApp extends React.Component {
             <React.Fragment>
                 <AddTodo store={store} />
                 <VisibleTodoList store={store} />
+                <Footer store={store} />
             </React.Fragment >
         );
     }
