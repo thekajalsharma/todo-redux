@@ -22,13 +22,10 @@ class FilterLink extends React.Component {
 }
 export default FilterLink;
 
-class Filter extends React.Component {
-    render() {
-        const { text, handleFilter } = this.props;
-        return (
-            <div>
-                <a href='#' onClick={handleFilter}>{text}</a>
-            </div>
-        );
-    }
+const Filter = (props) => {
+    return (
+        <div>
+            <a href='#' onClick={props.handleFilter}>{props.text}</a>
+        </div>
+    );
 }
