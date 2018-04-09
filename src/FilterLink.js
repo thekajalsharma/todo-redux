@@ -1,9 +1,19 @@
 import React from 'react';
 class FilterLink extends React.Component {
+
+    componentDidMount() {
+        this.unsubscribe = this.props.store.subscribe(() =>
+            this.forceUpdate()
+        );
+    }
+    componentWillUnmount() {
+        this.unsubscribe(); // return value of `store.subscribe()`
+    }
     render() {
         return (
             <Filter
                 text={this.props.text}
+                active={this.props.action === this.props.store.getState().visibilityFilter}
                 handleFilter={
                     (event) => {
                         event.preventDefault();
@@ -23,9 +33,7 @@ class FilterLink extends React.Component {
 export default FilterLink;
 
 const Filter = (props) => {
-    return (
-        <div>
-            <a href='#' onClick={props.handleFilter}>{props.text}</a>
-        </div>
-    );
+    if (props.active)
+        return (<span>{props.text}</span>);
+    return (<div><a href='#' onClick={props.handleFilter}>{props.text}</a></div>);
 }
