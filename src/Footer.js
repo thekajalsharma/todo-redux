@@ -4,9 +4,9 @@ class Footer extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <FilterLink store={this.props.store} text={'All'} action={'SHOW_ALL'} />
-                <FilterLink store={this.props.store} text={'Active'} action={'SHOW_ACTIVE'} />
-                <FilterLink store={this.props.store} text={'completed'} action={'SHOW_COMPLETED'} />
+                <FilterLink text={'All'} action={'SHOW_ALL'} />
+                <FilterLink text={'Active'} action={'SHOW_ACTIVE'} />
+                <FilterLink text={'completed'} action={'SHOW_COMPLETED'} />
             </React.Fragment>
         );
     }

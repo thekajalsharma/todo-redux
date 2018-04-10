@@ -1,6 +1,6 @@
 import React from 'react';
-
-const AddTodo = ({ store }) => {
+import PropTypes from 'prop-types';
+const AddTodo = (props, { store }) => {
     let nextTodoId = 2;
     return (<div>
         <input ref={(node) => this.inputText = node} />
@@ -15,5 +15,7 @@ const AddTodo = ({ store }) => {
     </div>
     );
 };
-
+AddTodo.contextTypes = {
+    store: PropTypes.object
+}
 export default AddTodo;

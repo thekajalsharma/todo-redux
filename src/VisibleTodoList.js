@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Todo from './Todo';
 
 class VisibleTodoList extends React.Component {
 
     componentDidMount() {
-        const { store } = this.props;
+        const { store } = this.context;
         this.unsubscribe = store.subscribe(() =>
             this.forceUpdate()
         );
@@ -17,7 +18,7 @@ class VisibleTodoList extends React.Component {
     getVisibleTodoArray = (todoArray, visibilityFilter) => {
         //  return todoArray;
         console.log("**************");
-        const { store } = this.props;
+        const { store } = this.context;
         switch (visibilityFilter) {
             case 'SHOW_ALL':
                 console.log("In Show all ");
@@ -39,7 +40,7 @@ class VisibleTodoList extends React.Component {
     }
 
     render() {
-        const { store } = this.props;
+        const { store } = this.context;
         const todoList = this.getVisibleTodoArray(store.getState().todoArray, store.getState().visibilityFilter);
         console.log("TODOList");
         console.log(todoList);
@@ -59,5 +60,8 @@ class VisibleTodoList extends React.Component {
         );
     }
 
+}
+VisibleTodoList.contextTypes = {
+    store: PropTypes.object
 }
 export default VisibleTodoList;
