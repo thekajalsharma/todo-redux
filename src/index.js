@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import TodoApp from './TodoApp';
 import { combineReducers, createStore } from 'redux';
-import Provider from './Provider';
+import { Provider } from 'react-redux';
 import deepFreeze from 'deepfreeze';
 import expect from 'expect';
 
