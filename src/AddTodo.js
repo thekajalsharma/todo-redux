@@ -37,6 +37,7 @@ let AddTodo = ({ dispatch }) => {
 
 //It's a common pattern to inject just the `dispatch` function, so if `connect()` sees that the 
 //second argument is `null` (or any falsey value), `dispatch` will be injected as a prop.
+//Now the default behavior to not subscribe to the store, and inject `dispatch` as a prop.
 
 AddTodo = connect()(AddTodo);
 export default AddTodo;
