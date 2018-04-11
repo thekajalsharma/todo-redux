@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Todo from './Todo';
+import { connect } from 'react-redux';
 
 const getVisibleTodoArray = (todoArray, visibilityFilter) => {
     switch (visibilityFilter) {
@@ -13,54 +14,26 @@ const getVisibleTodoArray = (todoArray, visibilityFilter) => {
     }
 }
 
-class VisibleTodoList extends React.Component {
-    componentDidMount() {
-        const { store } = this.context;
-        this.unsubscribe = store.subscribe(() =>
-            this.forceUpdate()
-        );
-    }
-
-    componentWillUnmount() {
-        this.unsubscribe();
-    }
-
-    render() {
-        const { store } = this.context;
-
-        return (
-            <TodoList
-                todoList={getVisibleTodoArray(store.getState().todoArray, store.getState().visibilityFilter)}
-                onTodoClick={(id) => store.dispatch({
-                    type: 'TOGGLE_TO_DO',
-                    id
-                })} />
-        );
-    }
-    mapDispatchToProps = (dispatch) => {
-        return {
-            onClick: (id) => {
-                dispatch({
-                    type: 'TOGGLE_TODO',
-                    id
-                })
-            }
-        };
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onTodoClick: (id) => {
+            dispatch({
+                type: 'TOGGLE_TO_DO',
+                id
+            })
+        }
     };
+};
 
-    mapStateToProps = (state) => {
-        return {
-            todoList: getVisibleTodoArray(
-                state.todoArray,
-                state.visibilityFilter
-            )
-        };
-    }
+const mapStateToProps = (state) => {
+    return {
+        todoList: getVisibleTodoArray(
+            state.todoArray,
+            state.visibilityFilter
+        )
+    };
 }
-VisibleTodoList.contextTypes = {
-    store: PropTypes.object
-}
-export default VisibleTodoList;
+
 
 const TodoList = ({ todoList, onTodoClick }) => {
     return (
@@ -74,3 +47,16 @@ const TodoList = ({ todoList, onTodoClick }) => {
             )}
         </ul>);
 }
+
+const VisibleTodoList = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(TodoList);
+
+
+export default VisibleTodoList;
+
+
+
+
+
