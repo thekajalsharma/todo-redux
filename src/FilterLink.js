@@ -1,32 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-class FilterLink extends React.Component {
-    componentDidMount() {
-        this.unsubscribe = this.context.store.subscribe(() =>
-            this.forceUpdate()
-        );
-    }
-    componentWillUnmount() {
-        this.unsubscribe(); // return value of `store.subscribe()`
-    }
-    render() {
-        return (
-            <Filter
-                active={this.props.action === this.context.store.getState().visibilityFilter}
-                handleFilter={
-                    () => {
-                        this.context.store.dispatch({
-                            type: 'SET_VISIBILITY_FILTER',
-                            filter: this.props.action
-                        })
-
-                    }
-                }
-            >{this.props.children}</Filter>
-        );
-    }
-}
 
 /*
 Notice that `active` now references the `filter` prop of the `FilterLink` component. 
@@ -48,15 +21,14 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        type: 'SET_VISIBILITY_FILTER',
-        filter: ownProps.action
+        handleFilter: () => {
+            dispatch({
+                type: 'SET_VISIBILITY_FILTER',
+                filter: ownProps.action
+            });
+        }
     }
 };
-
-FilterLink.contextTypes = {
-    store: PropTypes.object
-}
-export default FilterLink;
 
 const Filter = (props) => {
     if (props.active)
@@ -66,3 +38,10 @@ const Filter = (props) => {
         props.handleFilter();
     }}>{props.children}</a></div>);
 }
+
+const FilterLink = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Filter);
+
+export default FilterLink;
