@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import * as actionCreator from './actions/ActionCreator';
 
 //AddTodo isn't clearly a presentational or container component but is relying on store for dispatching
 //an action. Instead of reading dispatch from context, refactoring it to read it from props. Will create a 
@@ -9,31 +10,15 @@ import { connect } from 'react-redux';
 
 
 let AddTodo = ({ dispatch }) => {
-    let nextTodoId = 2;
     return (<div>
         <input ref={(node) => this.inputText = node} />
         <button onClick={() => {
-            dispatch({
-                type: 'ADD_TO_DO',
-                id: nextTodoId++,
-                text: this.inputText.value
-            })
+            dispatch(actionCreator.addTodo(this.inputText.value));
             this.inputText.value = '';
         }} />
     </div>
     );
 };
-
-// AddTodo = connect(
-//     state => {
-//         return {};
-//     },
-//     dispatch => {
-//         return { dispatch };
-//     }
-// )(AddTodo);
-
-
 
 //It's a common pattern to inject just the `dispatch` function, so if `connect()` sees that the 
 //second argument is `null` (or any falsey value), `dispatch` will be injected as a prop.

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import * as actionCreator from './actions/ActionCreator';
 /*
 Notice that `active` now references the `filter` prop of the `FilterLink` component. 
 In order to tell if a `Link` is active or not, we need to compare this prop with the 
@@ -22,10 +22,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         handleFilter: () => {
-            dispatch({
-                type: 'SET_VISIBILITY_FILTER',
-                filter: ownProps.action
-            });
+            dispatch(actionCreator.setVisibilityFilter(ownProps.action));
         }
     }
 };
