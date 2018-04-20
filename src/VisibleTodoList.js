@@ -14,22 +14,19 @@ const getVisibleTodoArray = (todoArray, visibilityFilter) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onTodoClick: (id) => {
-            dispatch(actionCreator.toggleTodo(id));
-        }
-    };
-};
+const mapDispatchToProps = (dispatch) => ({
+    onTodoClick: (id) => {
+        dispatch(actionCreator.toggleTodo(id));
+    }
+});
 
-const mapStateToProps = (state) => {
-    return {
-        todoList: getVisibleTodoArray(
-            state.todoArray,
-            state.visibilityFilter
-        )
-    };
-}
+const mapStateToProps = (state) => ({
+    todoList: getVisibleTodoArray(
+        state.todoArray,
+        state.visibilityFilter
+    )
+});
+
 
 
 const TodoList = ({ todoList, onTodoClick }) => {

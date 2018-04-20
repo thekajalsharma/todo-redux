@@ -13,19 +13,15 @@ about the container component's _own_ props, and not the props that are passed t
 which is the return value of `mapStateToProps`.
 */
 
-const mapStateToProps = (state, ownProps) => {
-    return {
-        active: ownProps.action === state.visibilityFilter
-    };
-};
+const mapStateToProps = (state, ownProps) => ({
+    active: ownProps.action === state.visibilityFilter
+});
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        handleFilter: () => {
-            dispatch(actionCreator.setVisibilityFilter(ownProps.action));
-        }
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    handleFilter() {
+        dispatch(actionCreator.setVisibilityFilter(ownProps.action));
     }
-};
+});
 
 const Filter = (props) => {
     if (props.active)
